@@ -1,1 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Clash Forum</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="select hidden">
+      <form action="">
+        <button class="close" type="button">✖️</button>
+        <label for="subject">Select Courses that Clash</label>
+
+        <div class="first_course">
+          <select name="courses" id="courses">
+            <option value="CSE2101">CSE2101</option>
+          </select>
+
+          <input type="time" class="time" id="time1" />
+        </div>
+
+        <div class="second_course">
+          <select name="courses2" id="courses2">
+            <option value="CSE2101">CSE2101</option>
+          </select>
+
+          <input type="time" class="time" id="time2" />
+        </div>
+
+        <button class="submit" type="button">Post</button>
+      </form>
+    </div>
+
+    <header class="header">
+      <h1>UNIVERSITY OF GUYANA COURSE CLASH FORUM</h1>
+    </header>
+
+    <div class="search">
+      <form action="" class="search_bar">
+        <label for="search_bar">🔍</label>
+        <input type="text" title="search_bar" />
+        <button class="add" type="button">+</button>
+      </form>
+    </div>
+
+    <section class="post_body"></section>
+
+    <div id="overlay" class="overlay hidden">
+      <div class="modal"></div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
 
