@@ -1,47 +1,68 @@
-const addBtn = document.getElementsByClassName("add")[0];
+function openModal() {
+  document.getElementById("overlay").style.display = "block";
+}
 
-const select = document.getElementsByClassName("select")[0];
-const blur = document.getElementsByClassName("overlay")[0];
-const submit = document.getElementsByClassName("submit")[0];
+function closeModal() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("course1").value = "";
+  document.getElementById("course2").value = "";
+  document.getElementById("time1").value = "";
+  document.getElementById("time2").value = "";
+  showError("");
+}
 
-const close = document.getElementsByClassName("close")[0];
+function showError(msg) {
+  const el = document.getElementById("formError");
+  el.textContent = msg;
+  el.style.display = msg ? "block" : "none";
+}
 
-const time1 = document.getElementById("time1");
-const time2 = document.getElementById("time2");
+function submitClash() {
+  const c1 = document.getElementById("course1").value;
+  const c2 = document.getElementById("course2").value;
+  const t1 = document.getElementById("time1").value;
+  const t2 = document.getElementById("time2").value;
 
-addBtn.addEventListener("click", () => {
-  select.classList.toggle("hidden");
-  blur.classList.toggle("hidden");
-});
+  if (!c1 || !c2) return showError("Please select both courses.");
+  if (!t1 || !t2) return showError("Please select both times.");
+  if (c1 === c2)  return showError("Please choose two different courses.");
 
-submit.addEventListener("click", () => {
-  select.classList.toggle("hidden");
-  blur.classList.toggle("hidden");
+  addPost(c1, c2, t1, t2);
+  closeModal();
+}
 
-  const course1 = document.querySelector(".first_course select");
-  const course2 = document.querySelector(".second_course select");
+function addPost(c1, c2, t1, t2) {
+  document.getElementById("emptyMsg").style.display = "none";
 
   const post = document.createElement("div");
-  post.classList.add("post_style");
+  post.className = "post";
+  post.style.cssText = "border:1px solid #ccc; border-radius:6px; padding:0.75rem 1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; align-items:center;";
 
-  const para = document.createElement("p");
-  para.textContent =
-    course1.value +
-    " --- " +
-    time1.value +
-    " & " +
-    course2.value +
-    " --- " +
-    time2.value;
+  post.innerHTML = `
+    <div>
+      <strong>${c1} clashes with ${c2}</strong><br/>
+      <small>${t1} — ${t2}</small>
+    </div>
+    <button onclick="this.closest('.post').remove(); checkEmpty();">🗑 Delete</button>
+  `;
 
-  post.appendChild(para);
+  document.getElementById("postContainer").prepend(post);
+}
 
-  const parent = document.querySelector(".post_body");
-  parent.appendChild(post);
+function checkEmpty() {
+  const posts = document.querySelectorAll(".post");
+  document.getElementById("emptyMsg").style.display = posts.length === 0 ? "block" : "none";
+}
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const term = this.value.toLowerCase();
+  document.querySelectorAll(".post").forEach(post => {
+    post.style.display = post.textContent.toLowerCase().includes(term) ? "flex" : "none";
+  });
 });
 
-close.addEventListener("click", () => {
-  select.classList.toggle("hidden");
-  blur.classList.toggle("hidden");
+document.getElementById("overlay").addEventListener("click", function (e) {
+  if (e.target === this) closeModal();
 });
 
+window.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
