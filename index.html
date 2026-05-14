@@ -1,55 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Course Clash Forum</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="select hidden">
-      <form action="">
-        <button class="close" type="button">✖️</button>
-        <label for="subject">Select Courses that Clash</label>
+  <body style="font-family: sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem;">
 
-        <div class="first_course">
-          <select name="courses" id="courses">
-            <option value="CSE2101">CSE2101</option>
-          </select>
+    <h1> Course Clash Forum</h1>
+    <p>Report scheduling conflicts between courses.</p>
 
-          <input type="time" class="time" id="time1" />
-        </div>
+    <hr />
 
-        <div class="second_course">
-          <select name="courses2" id="courses2">
-            <option value="CSE2101">CSE2101</option>
-          </select>
-
-          <input type="time" class="time" id="time2" />
-        </div>
-
-        <button class="submit" type="button">Post</button>
-      </form>
+    <!-- Search & Add -->
+    <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
+      <input id="searchInput" type="text" placeholder="Search clashes..." style="flex: 1; padding: 0.5rem;" />
+      <button onclick="openModal()">+ Add Clash</button>
     </div>
 
-    <header class="header">
-      <h1>UNIVERSITY OF GUYANA COURSE CLASH FORUM</h1>
-    </header>
-
-    <div class="search">
-      <form action="" class="search_bar">
-        <label for="search_bar">🔍</label>
-        <input type="text" title="search_bar" />
-        <button class="add" type="button">+</button>
-      </form>
+    <!-- Posts -->
+    <div id="postContainer">
+      <p id="emptyMsg">No clashes reported yet.</p>
     </div>
 
-    <section class="post_body"></section>
+    <!-- Modal -->
+    <div id="overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5);">
+      <div style="background:white; margin: 10vh auto; padding: 2rem; max-width: 420px; border-radius: 8px; position:relative;">
+        <button onclick="closeModal()" style="position:absolute; top:1rem; right:1rem; border:none; background:none; font-size:1rem; cursor:pointer;">✖</button>
 
-    <div id="overlay" class="overlay hidden">
-      <div class="modal"></div>
+        <h2>Report a Clash</h2>
+
+        <p id="formError" style="color:red; display:none;"></p>
+
+        <label>First Course</label><br />
+        <select id="course1" style="width:100%; margin-bottom:1rem; padding:0.4rem;">
+          <option value="">-- Select --</option>
+          <option>CSE2101</option>
+          <option>CSE2200</option>
+          <option>CSE2201</option>
+          <option>MTH2100</option>
+        </select>
+
+        <label>Time</label><br />
+        <input id="time1" type="time" style="width:100%; margin-bottom:1rem; padding:0.4rem;" /><br />
+
+        <label>Second Course</label><br />
+        <select id="course2" style="width:100%; margin-bottom:1rem; padding:0.4rem;">
+          <option value="">-- Select --</option>
+          <option>CSE2101</option>
+          <option>CSE2200</option>
+          <option>CSE2201</option>
+          <option>MTH2100</option>
+        </select>
+
+        <label>Time</label><br />
+        <input id="time2" type="time" style="width:100%; margin-bottom:1rem; padding:0.4rem;" /><br />
+
+        <button onclick="submitClash()" style="width:100%; padding:0.6rem;">Post Clash</button>
+      </div>
     </div>
+
+    <script src="app.js"></script>
   </body>
-  <script src="app.js"></script>
 </html>
-
